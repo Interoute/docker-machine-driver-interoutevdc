@@ -24,7 +24,9 @@ docker-machine create -d interoutevdc \
 ## Acknowledgement
 
 [Go-Cloudstack](https://github.com/svanharmelen/go-cloudstack) Written by [@svanharmelen](https://github.com/svanharmelen).
+
 [docker-machine-driver-cloudstack](https://github.com/atsaki/docker-machine-driver-cloudstack) Written by [@atsaki](https://github.com/atsaki).
+
 [Go-Cloudstack](https://github.com/xanzy/go-cloudstack) Written by [@xanzy](https://github.com/xanzy).
 
 ## Author
