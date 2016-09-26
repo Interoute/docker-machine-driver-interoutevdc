@@ -16,8 +16,11 @@ docker-machine create -d interoutevdc \
   --interoutevdc-vdcregion INTEROUTEVDC_REGION \
   --interoutevdc-networkid "UUID" \
   --interoutevdc-serviceofferingid "8192-4" \
+  --interoutevdc-templatefilter "self" \
   --interoutevdc-templateid "UUID" \
   --interoutevdc-zoneid "UUID" \
+  --interoutevdc-diskofferingid "UUID" \
+  --interoutevdc-disksize 25 \
   docker-machine
 ```
 

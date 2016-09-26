@@ -35,11 +35,14 @@ type Driver struct {
         SSHKeyPair           string
         PrivateIP            string
         TemplateID           string
+	TemplateFilter	     string
         ServiceOfferingID    string
         NetworkID            string
         ZoneID               string
         NetworkType          string
         VDCRegion            string
+	DiskOfferingID	     string
+	DiskSize	     int
 }
 
 func (d *Driver) GetCreateFlags() []mcnflag.Flag {
@@ -76,6 +79,18 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
                         Name:  "interoutevdc-zoneid",
                         Usage: "Interoute VDC zone ID",
                 },
+		mcnflag.StringFlag{
+                        Name:  "interoutevdc-templatefilter",
+                        Usage: "Interoute VDC template filter",
+                },
+		mcnflag.StringFlag{
+                        Name:  "interoutevdc-diskofferingid",
+                        Usage: "Interoute VDC disk offering ID",
+                },
+                mcnflag.IntFlag{
+                        Name:  "interoutevdc-disksize",
+                        Usage: "Interoute VDC additional disk size",
+                },
                 mcnflag.StringFlag{
                         Name:  "interoutevdc-vdcregion",
                         Usage: "Interoute VDC Region",
@@ -103,13 +118,6 @@ func (d *Driver) GetSSHHostname() (string, error) {
         return d.GetIP()
 }
 
-func (d *Driver) GetSSHUsername() string {
-        if d.SSHUser == "" {
-                d.SSHUser = "centos"
-        }
-        return d.SSHUser
-}
-
 // SetConfigFromFlags configures the driver with the object that was returned
 // by RegisterCreateFlags
 func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
@@ -119,8 +127,11 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
         d.UsePrivateIP = true
         d.VDCRegion = flags.String("interoutevdc-vdcregion")
         d.TemplateID = flags.String("interoutevdc-templateid")
+	d.TemplateFilter = flags.String("interoutevdc-templatefilter")
         d.ServiceOfferingID = flags.String("interoutevdc-serviceofferingid")
         d.NetworkID = flags.String("interoutevdc-networkid")
+	d.DiskOfferingID = flags.String("interoutevdc-diskofferingid")
+	d.DiskSize = flags.Int("interoutevdc-disksize")
 
         if err := d.setZone(flags.String("interoutevdc-zoneid")); err != nil {
                 return err
@@ -157,6 +168,26 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
         }
 
         return nil
+}
+
+func hasPrefix(s, prefix string) bool {
+	return len(s) >= len(prefix) && s[:len(prefix)] == prefix
+}
+
+func (d *Driver) GetSSHUsername() string {
+        cs := d.getClient()
+        template, _, _ := cs.Template.GetTemplateByID(d.TemplateID, d.TemplateFilter, d.ZoneID)
+
+	switch {
+		case hasPrefix(template.Ostypename, "CentOS"):
+			d.SSHUser = "centos"
+		case hasPrefix(template.Ostypename, "Ubuntu"):
+			d.SSHUser = "ubuntu"
+		default:
+			d.SSHUser = "ubuntu"
+	}
+
+        return d.SSHUser
 }
 
 func (d *Driver) GetURL() (string, error) {
@@ -232,6 +263,10 @@ func (d *Driver) Create() error {
         p.SetName(d.MachineName)
         p.SetDisplayname(d.MachineName)
         p.SetKeypair(d.SSHKeyPair)
+	if d.DiskOfferingID != "" {
+		p.SetDiskofferingid(d.DiskOfferingID)
+		p.SetSize(int64(d.DiskSize))
+	}
 
         if d.NetworkID != "" {
                 p.SetNetworkids([]string{d.NetworkID})
