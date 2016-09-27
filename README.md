@@ -15,7 +15,7 @@ docker-machine create -d interoutevdc \
   --interoutevdc-secretkey INTEROUTEVDC_SECRET_KEY \
   --interoutevdc-vdcregion INTEROUTEVDC_REGION \
   --interoutevdc-networkid "UUID" \
-  --interoutevdc-serviceofferingid "8192-4" \
+  --interoutevdc-serviceofferingid "UUID" \
   --interoutevdc-templatefilter "self" \
   --interoutevdc-templateid "UUID" \
   --interoutevdc-zoneid "UUID" \
