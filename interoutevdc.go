@@ -262,6 +262,7 @@ func (d *Driver) Create() error {
         p := cs.VirtualMachine.NewDeployVirtualMachineParams(d.ServiceOfferingID, d.TemplateID, d.ZoneID)
         p.SetName(d.MachineName)
         p.SetDisplayname(d.MachineName)
+        p.SetDetails(map[string]string{"workload": "ranchernode",})
         p.SetKeypair(d.SSHKeyPair)
 	if d.DiskOfferingID != "" {
 		p.SetDiskofferingid(d.DiskOfferingID)
