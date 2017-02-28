@@ -1,7 +1,7 @@
-# Docker Machine Driver for [Interoute VDC](https://cloudstore.interoute.com/account/login)
+# Docker Machine Driver for [Interoute VDC](https://cloudstore.interoute.com)
 
-This is a Interoute VDC driver for [Docker Machine](https://docs.docker.com/machine/).
-It allows to create Docker hosts on [Interoute VDC](https://cloudstore.interoute.com/account/login).
+This is an Interoute VDC driver for [Docker Machine](https://docs.docker.com/machine/).
+It allows for the creation of Docker hosts on the [Interoute VDC](https://cloudstore.interoute.com) cloud platform.
 
 ## Requirements
 
@@ -24,14 +24,14 @@ docker-machine create -d interoutevdc \
   docker-machine
 ```
 
-## Acknowledgement
+## Acknowledgements
 
-[docker-machine-driver-cloudstack](https://github.com/atsaki/docker-machine-driver-cloudstack) Written by [@atsaki](https://github.com/atsaki).
+[docker-machine-driver-cloudstack](https://github.com/atsaki/docker-machine-driver-cloudstack) written by [@atsaki](https://github.com/atsaki).
 
-[Go-Cloudstack](https://github.com/xanzy/go-cloudstack) Written by [@xanzy](https://github.com/xanzy).
+[Go-Cloudstack](https://github.com/xanzy/go-cloudstack) written by [@xanzy](https://github.com/xanzy).
 
 ## Author
-Radu Stefanache([@radu-stefanache](https://github.com/radu-stefanache))
+Radu Stefanache ([@radu-stefanache](https://github.com/radu-stefanache)).
 
-## Notice
-This driver is supposed to be used in conjuction with [Rancher](http://rancher.com/) hence  the UUIDs instead of names.
+## Note
+This driver is supposed to be used in conjunction with [Rancher](http://rancher.com/) hence the UUIDs instead of names.
