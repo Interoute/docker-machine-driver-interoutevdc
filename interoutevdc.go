@@ -183,6 +183,8 @@ func (d *Driver) GetSSHUsername() string {
 			d.SSHUser = "centos"
 		case hasPrefix(template.Ostypename, "Ubuntu"):
 			d.SSHUser = "ubuntu"
+                case hasPrefix(template.Ostypename, "Red Hat"):
+                        d.SSHUser = "redhat"
 		default:
 			d.SSHUser = "ubuntu"
 	}
