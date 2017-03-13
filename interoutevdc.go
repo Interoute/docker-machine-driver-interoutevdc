@@ -9,7 +9,7 @@ import (
         "github.com/docker/machine/libmachine/mcnflag"
         "github.com/docker/machine/libmachine/ssh"
         "github.com/docker/machine/libmachine/state"
-        "github.com/radu-stefanache/go-cloudstack/cloudstack"
+        "github.com/Interoute/go-cloudstack/cloudstack"
 )
 
 const (
